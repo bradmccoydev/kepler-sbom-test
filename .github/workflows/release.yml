@@ -79,16 +79,12 @@ jobs:
           make containerized_build_container_rpm
           cd _output/rpmbuild/
           sudo tar czvf /tmp/kepler.rpm.tar.gz RPMS/
-          
+      
       - name: release rpm
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/kepler.rpm.tar.gz
-          asset_name: kepler.rpm.tar.gz
-          asset_content_type: application/gzip
+          tag_name: ${{ github.event.inputs.tag }}
+          files: /tmp/kepler.rpm.tar.gz
   
   create-release-branch:
     name: Create release branch
