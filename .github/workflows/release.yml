@@ -36,10 +36,13 @@ jobs:
   build:
     name: Upload Release Asset
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        echo "name=date::$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+        #run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Checkout code
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
