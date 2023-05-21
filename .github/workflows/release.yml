@@ -128,7 +128,7 @@ jobs:
         platforms: linux/amd64
         push: true
         tags: quay.io/bradmccoydev1/test
-        labels: latest, ${{ github.event.inputs.release }}
+        labels: ${{ github.event.inputs.release }}
         file: build/Dockerfile
     
     - name: Generate SBOM
