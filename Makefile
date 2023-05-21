@@ -15,13 +15,13 @@ ROOTLESS	?= false
 ifdef IMAGE_REPO
 	IMAGE_REPO := $(IMAGE_REPO)
 else
-	IMAGE_REPO := quay.io/sustainable_computing_io
+	IMAGE_REPO := quay.io/bradmccoydev1
 endif
 
 ifdef BUILDER_IMAGE
 	BUILDER_IMAGE := $(BUILD_IMAGE)
 else
-	BUILDER_IMAGE := quay.io/sustainable_computing_io/kepler_builder:ubi-8.6-bcc-0.24-go1.18
+	BUILDER_IMAGE := quay.io/bradmccoydev1/kepler_builder:ubi-8.6-bcc-0.24-go1.18
 endif
 
 ifdef IMAGE_TAG
