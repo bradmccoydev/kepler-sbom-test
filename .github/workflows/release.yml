@@ -134,7 +134,7 @@ jobs:
     - name: Generate SBOM
       uses: anchore/sbom-action@4d571ad1038a9cc29d676154ef265ab8f9027042 # v0.14.2
       with:
-        image: test
+        image: sbom-quay.io/bradmccoydev1/test:${{ github.event.inputs.release }}
         artifact-name: sbom-quay.io/bradmccoydev1/test
         output-file: ./sbom-quay.io/bradmccoydev1/test.spdx.json
 
