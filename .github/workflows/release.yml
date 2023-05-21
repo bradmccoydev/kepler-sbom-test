@@ -130,3 +130,16 @@ jobs:
         tags: quay.io/bradmccoydev1/test
         labels: latest, ${{ github.event.inputs.release }}
         file: build/Dockerfile
+    
+    - name: Generate SBOM
+      uses: anchore/sbom-action@4d571ad1038a9cc29d676154ef265ab8f9027042 # v0.14.2
+      with:
+        image: test
+        artifact-name: sbom-quay.io/bradmccoydev1/test
+        output-file: ./sbom-quay.io/bradmccoydev1/test.spdx.json
+
+    - name: Attach SBOM to release
+      uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
+      with:
+        tag_name: ${{ github.event.inputs.tag }}
+        files: ./sbom-quay.io/bradmccoydev1/test.spdx.json
