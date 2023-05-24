@@ -114,6 +114,8 @@ jobs:
       uses: docker/setup-qemu-action@e81a89b1732b9c48d79cd809d8d81d79c4647a18 # v2.1.0
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@4b4e9c3e2d4531116a6f8ba8e71fc6e2cb6e6c8c # v2
+    - name: Set up Cosign
+      uses: sigstore/cosign-installer@v3.0.2
     - name: Login to Quay
       uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
       with:
@@ -122,6 +124,7 @@ jobs:
         password: ${{ secrets.BOT_TOKEN }}
 
     - name: Build and push
+      id: docker_build_image
       uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
       with:
         context: .
@@ -130,6 +133,12 @@ jobs:
         tags: quay.io/bradmccoydev1/test
         labels: latest, ${{ github.event.inputs.release }}
         file: build/Dockerfile
+
+    - name: Sign container image
+      env:
+        IMAGE_DIGEST: ${{ steps.docker_build_image.outputs.digest }}
+      run: |
+        cosign sign --yes quay.io/bradmccoydev1/test:${{ github.event.inputs.release }}
     
     - name: Generate SBOM
       uses: anchore/sbom-action@4d571ad1038a9cc29d676154ef265ab8f9027042 # v0.14.2
