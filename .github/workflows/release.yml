@@ -137,8 +137,9 @@ jobs:
     - name: Sign container image
       env:
         IMAGE_DIGEST: ${{ steps.docker_build_image.outputs.digest }}
+        COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
+        COSIGN_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
       run: |
-        echo "$COSIGN_PRIVATE_KEY" > /tmp/cosign.key
         cosign sign -key /tmp/cosign.key quay.io/bradmccoydev1/test:${{ github.event.inputs.release }} --yes
     
     - name: Generate SBOM
