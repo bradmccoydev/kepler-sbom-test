@@ -140,7 +140,7 @@ jobs:
         COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
         COSIGN_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
       run: |
-        cosign sign -key /tmp/cosign.key quay.io/bradmccoydev1/test:${{ github.event.inputs.release }} --yes
+        cosign sign quay.io/bradmccoydev1/test:${{ github.event.inputs.release }} --yes
     
     - name: Generate SBOM
       uses: anchore/sbom-action@4d571ad1038a9cc29d676154ef265ab8f9027042 # v0.14.2
