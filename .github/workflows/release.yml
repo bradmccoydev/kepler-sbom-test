@@ -138,7 +138,8 @@ jobs:
       env:
         IMAGE_DIGEST: ${{ steps.docker_build_image.outputs.digest }}
       run: |
-        cosign sign --yes quay.io/bradmccoydev1/test:${{ github.event.inputs.release }}
+        echo "$COSIGN_PRIVATE_KEY" > /tmp/cosign.key
+        cosign sign -key /tmp/cosign.key quay.io/bradmccoydev1/test:${{ github.event.inputs.release }} --yes
     
     - name: Generate SBOM
       uses: anchore/sbom-action@4d571ad1038a9cc29d676154ef265ab8f9027042 # v0.14.2
